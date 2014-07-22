@@ -20,33 +20,45 @@
     }
 
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/friends/list.json"];
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [[PFTwitterUtils twitter] signRequest:request];
 
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSError *error;
+    NSURLResponse *urlResponse = nil;
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+
+    if (response == nil) {
         if (error) {
+            NSLog(@"Error: %@", error);
             NSString *result = [NSString stringWithFormat:@"{ \"error\": \"%@\" }", error];
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
             NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
             [self writeJavascript:javaScript];
         } else {
-            NSString *result = [NSString stringWithFormat: @"{ \"error\": false, \"friends\": ["];
-            NSError *errorJson = nil;
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&errorJson];
-            NSArray *friends = json[@"users"];
-
-            for (NSDictionary *friend in friends) {
-                result = [NSString stringWithFormat:@"%@ { \"username\": \"%@\", \"name\": \"%@\", \"picture\": \"%@\"},", 
-                    result, friend[@"screen_name"], friend[@"name"], friend[@"profile_image_url"]];
-            }
-
-            result = [NSString stringWithFormat:@"%@] }", [result substringToIndex:[result length] - 1]];
+            NSLog(@"Request Failed");
+            NSString *result = [NSString stringWithFormat:@"{ \"error\": \"Request Failed\" }"];
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
             NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
             [self writeJavascript:javaScript];
         }
-    }];
+        return;
+    }
+    
+    NSString *result = [NSString stringWithFormat: @"{ \"error\": false, \"friends\": ["];
+    NSError *errorJson = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableContainers error:&errorJson];
+    NSArray *friends = json[@"users"];
+        
+    for (NSDictionary *friend in friends) {
+        result = [NSString stringWithFormat:@"%@ { \"username\": \"%@\", \"name\": \"%@\", \"picture\": \"%@\"},",
+                  result, friend[@"screen_name"], friend[@"name"], friend[@"profile_image_url"]];
+    }
+    
+    result = [NSString stringWithFormat:@"%@] }", [result substringToIndex:[result length] - 1]];
+    NSLog(@"Sending Twitter results! %@",result);
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
+    NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
+    [self writeJavascript:javaScript];
 }
 
 @end
