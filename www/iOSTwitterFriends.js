@@ -8,7 +8,7 @@ var iOSTwitterFriends = function(callback) {
     if (data.error)
       return callback(err, null);
 
-    return callback(null, data.contacts);
+    return callback(null, data.friends);
   }
 
   exec(iOSTwitterFriendsReturn, iOSTwitterFriendsReturn, 'iOSTwitterFriends', 'iOSTwitterFriends', []);
