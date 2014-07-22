@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova.parse.twitter.friends" version="1.0.0">
+  <engines>
+    <engine name="cordova" version=">=3.0.0" />
+  </engines>
+  <name>iOSTwitterFriends</name>
+  <description>Plugin for iOS to retrieve the Twitter friends.</description>
+  <author>Nick Barth</author>
+  <keywords>iOS Twitter Friends</keywords>
+  <license>MIT</license>
+
+  <!-- JavaScript interface -->
+  <js-module src="www/iOSTwitterFriends.js" name="iOSTwitterFriends" target="www/iOSTwitterFriends.js">
+    <clobbers target="window.iOSTwitterFriends" />
+  </js-module>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="plugins">
+      <feature name="iOSTwitterFriends">
+        <param name="ios-package" value="iOSTwitterFriends"/>
+        <param name="onload" value="true" />
+      </feature>
+      <plugin name="iOSTwitterFriends" value="iOSTwitterFriends"/>
+    </config-file>
+    <header-file src="src/ios/iOSTwitterFriends.h" />
+    <source-file src="src/ios/iOSTwitterFriends.m" />
+
+    <framework src="Accounts.framework" />
+    <framework src="Social.framework" />
+  </platform>
+</plugin>
