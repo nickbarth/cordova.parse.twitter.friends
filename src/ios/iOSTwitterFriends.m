@@ -55,7 +55,6 @@
     }
     
     result = [NSString stringWithFormat:@"%@] }", [result substringToIndex:[result length] - 1]];
-    NSLog(@"Sending Twitter results! %@",result);
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
     NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
     [self writeJavascript:javaScript];
