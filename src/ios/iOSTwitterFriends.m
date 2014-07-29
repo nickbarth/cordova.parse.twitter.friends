@@ -54,7 +54,12 @@
                   result, friend[@"screen_name"], friend[@"name"], friend[@"profile_image_url"]];
     }
     
-    result = [NSString stringWithFormat:@"%@] }", [result substringToIndex:[result length] - 1]];
+    if ([friends count] > 1) {
+        result = [NSString stringWithFormat:@"%@] }", [result substringToIndex:[result length] - 1]];
+    } else {
+        result = [NSString stringWithFormat:@"%@] }", result];
+    }
+    
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
     NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
     [self writeJavascript:javaScript];
