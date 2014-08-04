@@ -6,7 +6,7 @@ var iOSTwitterFriends = function(callback) {
     var data = JSON.parse(json);
 
     if (data.error)
-      return callback(err, null);
+      return callback(data.error, null);
 
     return callback(null, data.friends);
   }
