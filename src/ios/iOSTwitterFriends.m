@@ -11,7 +11,7 @@
     if (![PFTwitterUtils isLinkedWithUser:currentUser]) {
         [PFTwitterUtils linkUser:currentUser block:^(BOOL succeeded, NSError *error) {
             if (error) {
-                NSString *result = [NSString stringWithFormat:@"{ \"error\": \"%@\" }", error];
+                NSString *result = @"{ \"error\": \"Invalid Session\" }";
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                 NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                 [self writeJavascript:javaScript];
@@ -27,7 +27,7 @@
                 if (response == nil) {
                     if (error) {
                         NSLog(@"Error: %@", error);
-                        NSString *result = [NSString stringWithFormat:@"{ \"error\": \"%@\" }", error];
+                        NSString *result = @"{ \"error\": \"Invalid Session\" }";
                         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                         NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                         [self writeJavascript:javaScript];
@@ -74,7 +74,7 @@
         if (response == nil) {
             if (error) {
                 NSLog(@"Error: %@", error);
-                NSString *result = [NSString stringWithFormat:@"{ \"error\": \"%@\" }", error];
+                NSString *result = "{ \"error\": \"Invalid Session\" }";
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                 NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                 [self writeJavascript:javaScript];
