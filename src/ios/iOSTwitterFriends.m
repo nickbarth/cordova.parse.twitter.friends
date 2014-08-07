@@ -33,7 +33,7 @@
                         [self writeJavascript:javaScript];
                     } else {
                         NSLog(@"Request Failed");
-                        NSString *result = [NSString stringWithFormat:@"{ \"error\": \"Request Failed\" }"];
+                        NSString *result = @"{ \"error\": \"Request Failed\" }";
                         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                         NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                         [self writeJavascript:javaScript];
@@ -41,7 +41,7 @@
                     return;
                 }
                 
-                NSString *result = [NSString stringWithFormat: @"{ \"error\": false, \"friends\": ["];
+                NSString *result = @"{ \"error\": false, \"friends\": [";
                 NSError *errorJson = nil;
                 NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableContainers error:&errorJson];
                 NSArray *friends = json[@"users"];
@@ -74,13 +74,13 @@
         if (response == nil) {
             if (error) {
                 NSLog(@"Error: %@", error);
-                NSString *result = "{ \"error\": \"Invalid Session\" }";
+                NSString *result = @"{ \"error\": \"Invalid Session\" }";
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                 NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                 [self writeJavascript:javaScript];
             } else {
                 NSLog(@"Request Failed");
-                NSString *result = [NSString stringWithFormat:@"{ \"error\": \"Request Failed\" }"];
+                NSString *result = @"{ \"error\": \"Request Failed\" }";
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
                 NSString* javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
                 [self writeJavascript:javaScript];
@@ -88,7 +88,7 @@
             return;
         }
         
-        NSString *result = [NSString stringWithFormat: @"{ \"error\": false, \"friends\": ["];
+        NSString *result = @"{ \"error\": false, \"friends\": [";
         NSError *errorJson = nil;
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableContainers error:&errorJson];
         NSArray *friends = json[@"users"];
