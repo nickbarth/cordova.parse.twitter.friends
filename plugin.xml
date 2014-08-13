@@ -7,7 +7,7 @@
   <description>Plugin for iOS to retrieve the Twitter friends.</description>
   <author>Nick Barth</author>
   <keywords>iOS Twitter Friends</keywords>
-  <license>MIT</license>
+  <license>CC0</license>
 
   <!-- JavaScript interface -->
   <js-module src="www/iOSTwitterFriends.js" name="iOSTwitterFriends" target="www/iOSTwitterFriends.js">
